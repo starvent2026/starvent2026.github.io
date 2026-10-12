@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استارونت | ستاره نوآور یگانه — هوش مصنوعی و رباتیک</title>
+<meta name="description" content="استارونت (ستاره نوآور یگانه) — استارت‌آپ هوش مصنوعی و رباتیک؛ توسعه اپلیکیشن و آموزش تخصصی.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0B1023;
+    --bg-deep-2:#111834;
+    --bg-light:#F6F4EE;
+    --ink:#EDEDF4;
+    --ink-soft:#B9BCD4;
+    --ink-dark:#171A2E;
+    --ink-dark-soft:#4A4E68;
+    --gold:#E5B24A;
+    --gold-soft:#F0CE86;
+    --cyan:#5FD3C4;
+    --line:rgba(237,237,244,0.12);
+    --line-light:rgba(23,26,46,0.12);
+    --radius:18px;
+    --serif-fa:'Vazirmatn', sans-serif;
+    --mono-en:'Space Grotesk', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--serif-fa);
+    background:var(--bg-light);
+    color:var(--ink-dark);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--gold-soft);color:var(--ink-dark);}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;right:0;left:0;z-index:100;
+    background:rgba(11,16,35,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    transition:background .3s ease;
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:34px;height:34px;flex-shrink:0;
+  }
+  .brand-name{
+    font-family:var(--mono-en);
+    font-weight:700;font-size:19px;letter-spacing:0.5px;
+    color:var(--ink);
+  }
+  .brand-name span{color:var(--gold);}
+  .nav-links{display:flex;gap:34px;align-items:center;}
+  .nav-links a{
+    color:var(--ink-soft);font-size:14.5px;font-weight:500;
+    transition:color .2s ease;position:relative;padding:4px 0;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--ink);}
+  .nav-cta{
+    background:var(--gold);color:var(--ink-dark);
+    padding:10px 22px;border-radius:100px;font-weight:700;font-size:14px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(229,178,74,0.35);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--ink);font-size:26px;cursor:pointer;}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;
+    background:radial-gradient(ellipse 120% 80% at 50% -10%, var(--bg-deep-2), var(--bg-deep) 65%);
+    color:var(--ink);
+    display:flex;align-items:center;
+    padding:140px 0 90px;
+    overflow:hidden;
+  }
+  #hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.9;}
+  .hero-inner{position:relative;z-index:2;width:100%;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono-en);font-size:13px;letter-spacing:2px;
+    color:var(--gold-soft);text-transform:uppercase;
+    border:1px solid var(--line);padding:7px 16px;border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);}
+  .hero h1{
+    font-size:clamp(38px, 6.4vw, 74px);
+    font-weight:800;line-height:1.18;letter-spacing:-0.5px;
+    max-width:900px;margin-bottom:26px;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--gold);
+    background:linear-gradient(90deg, var(--gold), var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    font-size:clamp(16px,2vw,19.5px);color:var(--ink-soft);
+    max-width:600px;line-height:1.9;margin-bottom:42px;font-weight:400;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:64px;}
+  .btn-primary{
+    background:var(--gold);color:var(--ink-dark);font-weight:700;font-size:15.5px;
+    padding:15px 32px;border-radius:100px;display:inline-block;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(229,178,74,0.3);}
+  .btn-ghost{
+    border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:15.5px;
+    padding:15px 30px;border-radius:100px;display:inline-block;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .btn-ghost:hover{background:rgba(237,237,244,0.06);border-color:rgba(237,237,244,0.3);}
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-top:1px solid var(--line);padding-top:34px;max-width:820px;
+  }
+  .hero-stats div{padding-left:24px;border-right:1px solid var(--line);}
+  .hero-stats div:first-child{border-right:none;padding-right:0;}
+  .hero-stats b{
+    display:block;font-family:var(--mono-en);font-size:clamp(22px,3vw,30px);
+    color:var(--ink);font-weight:700;margin-bottom:4px;
+  }
+  .hero-stats span{font-size:13px;color:var(--ink-soft);}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:110px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-tag{
+    font-family:var(--mono-en);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--ink-dark-soft);font-weight:600;margin-bottom:14px;display:block;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.6vw,42px);font-weight:800;line-height:1.3;letter-spacing:-0.3px;
+  }
+  .section-head p{margin-top:16px;color:var(--ink-dark-soft);font-size:16.5px;line-height:1.85;max-width:560px;}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--bg-light);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+  .about-text p{font-size:17px;line-height:2;color:var(--ink-dark-soft);margin-bottom:20px;}
+  .about-text strong{color:var(--ink-dark);font-weight:700;}
+  .about-orbit{position:relative;aspect-ratio:1;max-width:420px;justify-self:center;width:100%;}
+
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-light);border:1px solid var(--line-light);border-radius:var(--radius);overflow:hidden;margin-top:80px;}
+  .pillar{background:var(--bg-light);padding:36px 30px;}
+  .pillar b{display:block;font-family:var(--mono-en);font-size:32px;font-weight:700;color:var(--ink-dark);margin-bottom:6px;}
+  .pillar span{color:var(--ink-dark-soft);font-size:14.5px;}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--bg-deep);color:var(--ink);position:relative;}
+  .services .section-tag{color:var(--gold-soft);}
+  .services .section-head p{color:var(--ink-soft);}
+  .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .service-card{
+    background:var(--bg-deep-2);padding:44px 40px;position:relative;
+    transition:background .3s ease;
+  }
+  .service-card:hover{background:#151D3D;}
+  .service-icon{
+    width:52px;height:52px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(229,178,74,0.12);margin-bottom:28px;
+  }
+  .service-icon svg{width:26px;height:26px;stroke:var(--gold-soft);}
+  .service-card h3{font-size:22px;font-weight:700;margin-bottom:14px;}
+  .service-card p{color:var(--ink-soft);font-size:15px;line-height:1.85;margin-bottom:20px;}
+  .service-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .service-tags span{
+    font-family:var(--mono-en);font-size:11.5px;color:var(--cyan);
+    border:1px solid rgba(95,211,196,0.3);padding:4px 12px;border-radius:100px;
+  }
+
+  /* ---------- PROCESS / APPROACH ---------- */
+  .approach{background:var(--bg-light);}
+  .approach-list{display:flex;flex-direction:column;}
+  .approach-item{
+    display:grid;grid-template-columns:90px 1fr 1fr;gap:32px;
+    padding:38px 0;border-top:1px solid var(--line-light);align-items:center;
+  }
+  .approach-list .approach-item:last-child{border-bottom:1px solid var(--line-light);}
+  .approach-num{font-family:var(--mono-en);font-size:14px;color:var(--gold);font-weight:700;}
+  .approach-item h4{font-size:19px;font-weight:700;color:var(--ink-dark);}
+  .approach-item p{color:var(--ink-dark-soft);font-size:15px;line-height:1.8;}
+
+  /* ---------- PRODUCTS ---------- */
+  .products{background:var(--bg-deep);color:var(--ink);}
+  .products .section-tag{color:var(--gold-soft);}
+  .products .section-head p{color:var(--ink-soft);}
+  .product-scroll{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .product-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;
+    background:linear-gradient(160deg, rgba(255,255,255,0.03), transparent);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .product-card:hover{transform:translateY(-6px);border-color:rgba(229,178,74,0.4);}
+  .product-badge{
+    font-family:var(--mono-en);font-size:11px;letter-spacing:1px;text-transform:uppercase;
+    color:var(--cyan);margin-bottom:18px;display:inline-block;
+  }
+  .product-card h3{font-size:20px;font-weight:700;margin-bottom:12px;}
+  .product-card p{color:var(--ink-soft);font-size:14.5px;line-height:1.8;}
+
+  /* ---------- EDUCATION / CTA BAND ---------- */
+  .edu-band{
+    background:var(--gold);color:var(--ink-dark);
+  }
+  .edu-inner{
+    display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:center;
+  }
+  .edu-inner h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;line-height:1.35;margin-bottom:18px;}
+  .edu-inner p{font-size:16px;line-height:1.9;color:rgba(23,26,46,0.75);max-width:520px;}
+  .edu-cta{background:var(--ink-dark);color:var(--ink);}
+  .edu-list{list-style:none;}
+  .edu-list li{
+    display:flex;align-items:flex-start;gap:12px;padding:16px 0;border-top:1px solid rgba(23,26,46,0.18);font-weight:600;font-size:15.5px;
+  }
+  .edu-list li:last-child{padding-bottom:0;}
+  .edu-list li::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--ink-dark);margin-top:7px;flex-shrink:0;transform:rotate(45deg);}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--bg-light);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;}
+  .contact-info h2{font-size:clamp(28px,3.6vw,42px);font-weight:800;line-height:1.3;margin-bottom:20px;}
+  .contact-info p{color:var(--ink-dark-soft);font-size:16.5px;line-height:1.9;margin-bottom:32px;max-width:460px;}
+  .contact-detail{display:flex;flex-direction:column;gap:18px;}
+  .contact-detail a{font-weight:600;font-size:15.5px;color:var(--ink-dark);border-bottom:1px solid transparent;transition:border-color .2s ease;}
+  .contact-detail a:hover{border-color:var(--gold);}
+  .contact-detail span{display:block;font-size:12.5px;color:var(--ink-dark-soft);font-family:var(--mono-en);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+
+  form{display:flex;flex-direction:column;gap:18px;}
+  .field label{display:block;font-size:13.5px;font-weight:600;color:var(--ink-dark-soft);margin-bottom:8px;}
+  .field input, .field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--line-light);
+    padding:12px 2px;font-family:var(--serif-fa);font-size:15.5px;color:var(--ink-dark);
+    transition:border-color .2s ease;
+  }
+  .field input:focus, .field textarea:focus{outline:none;border-color:var(--gold);}
+  .field textarea{resize:vertical;min-height:90px;}
+  form button{
+    margin-top:10px;background:var(--ink-dark);color:var(--ink);border:none;
+    padding:16px 32px;border-radius:100px;font-family:var(--serif-fa);font-weight:700;font-size:15.5px;
+    cursor:pointer;align-self:flex-start;transition:transform .2s ease, background .2s ease;
+  }
+  form button:hover{transform:translateY(-2px);background:#232848;}
+  .form-note{font-size:13px;color:var(--ink-dark-soft);margin-top:-4px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bg-deep);color:var(--ink-soft);padding:56px 0 34px;}
+  .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:28px;}
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+  .footer-links a{font-size:14px;color:var(--ink-soft);transition:color .2s ease;}
+  .footer-links a:hover{color:var(--ink);}
+  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:rgba(185,188,212,0.6);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .nav-links{position:fixed;top:70px;right:0;left:0;background:var(--bg-deep);flex-direction:column;padding:20px 28px;gap:20px;border-bottom:1px solid var(--line);display:none;}
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+    .hero-stats{grid-template-columns:repeat(2,1fr);row-gap:26px;}
+    .hero-stats div:nth-child(3){border-right:none;padding-right:0;}
+    .about-grid, .contact-grid, .edu-inner{grid-template-columns:1fr;}
+    .about-orbit{margin-top:20px;max-width:320px;}
+    .pillars{grid-template-columns:1fr;}
+    .service-grid{grid-template-columns:1fr;}
+    .product-scroll{grid-template-columns:1fr;}
+    .approach-item{grid-template-columns:50px 1fr;}
+    .approach-item p{grid-column:1 / -1;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="2.5" fill="#E5B24A"/>
+        <circle cx="8" cy="14" r="1.8" fill="#5FD3C4"/>
+        <circle cx="32" cy="12" r="1.8" fill="#5FD3C4"/>
+        <circle cx="10" cy="30" r="1.8" fill="#5FD3C4"/>
+        <circle cx="31" cy="29" r="1.8" fill="#5FD3C4"/>
+        <path d="M20 20L8 14M20 20L32 12M20 20L10 30M20 20L31 29" stroke="#E5B24A" stroke-width="1" opacity="0.5"/>
+      </svg>
+      <span class="brand-name">Star<span>vent</span></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">درباره ما</a>
+      <a href="#services">خدمات</a>
+      <a href="#products">محصولات</a>
+      <a href="#education">آموزش</a>
+      <a href="#contact">تماس</a>
+    </div>
+    <a href="#contact" class="nav-cta">شروع همکاری</a>
+    <button class="nav-toggle" id="navToggle" aria-label="باز کردن منو">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="container hero-inner">
+    <span class="eyebrow">ستاره نوآور یگانه</span>
+    <h1>هوش مصنوعی و رباتیک را <em>قابل لمس</em> می‌کنیم</h1>
+    <p class="lead">استارونت از یک ایده‌ی ساده شکل گرفت: فناوری‌های پیچیده باید به‌جای ترساندن، در خدمت آدم‌ها باشند. ما مدل‌های هوش مصنوعی، سامانه‌های رباتیک و اپلیکیشن می‌سازیم و همان دانش را از طریق دوره‌های آموزشی به نسل بعدی مهندسان منتقل می‌کنیم.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">دیدن خدمات ما</a>
+      <a href="#contact" class="btn-ghost">صحبت با تیم فنی</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>+40</b><span>پروژه اجرا شده</span></div>
+      <div><b>+12</b><span>مدل هوش مصنوعی در تولید</span></div>
+      <div><b>+900</b><span>دانشجوی دوره‌های تخصصی</span></div>
+      <div><b>۵ سال</b><span>تجربه‌ی تیم فنی</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="section-tag">درباره استارونت</span>
+        <h2 style="font-size:clamp(26px,3.2vw,36px);font-weight:800;margin-bottom:24px;line-height:1.35;">از یک تیم کوچک مهندسی، به آزمایشگاهی برای آینده‌ی فناوری</h2>
+        <p>«استارونت» برگرفته از عبارت <strong>ستاره نوآور یگانه</strong> است؛ نامی که ماموریت ما را در خودش دارد: نوآوری‌ای یکتا که مثل ستاره، مسیر را روشن می‌کند. ما در تقاطع سه حوزه کار می‌کنیم: هوش مصنوعی کاربردی، رباتیک، و توسعه نرم‌افزار.</p>
+        <p>هر پروژه از یک سوال ساده شروع می‌شود: این فناوری قرار است چه مشکل واقعی را حل کند؟ سپس تیم ما — از مهندسان یادگیری ماشین تا طراحان رابط کاربری — آن ایده را به محصولی قابل استفاده تبدیل می‌کند.</p>
+      </div>
+      <div class="about-orbit">
+        <canvas id="about-canvas" width="420" height="420" style="width:100%;height:100%;"></canvas>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar"><b>هوش مصنوعی</b><span>مدل‌های یادگیری ماشین سفارشی برای صنعت و کسب‌وکار</span></div>
+      <div class="pillar"><b>رباتیک</b><span>طراحی و برنامه‌نویسی سامانه‌های خودران و صنعتی</span></div>
+      <div class="pillar"><b>اپلیکیشن</b><span>محصولات نرم‌افزاری موبایل و وب با تجربه کاربری روان</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">خدمات ما</span>
+      <h2>هر چیزی که برای ساختن یک محصول هوشمند لازم دارید</h2>
+      <p>از تحقیق و مدل‌سازی اولیه تا استقرار در مقیاس صنعتی؛ ما در تمام مراحل کنار شما هستیم.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+        <h3>هوش مصنوعی و یادگیری ماشین</h3>
+        <p>طراحی و آموزش مدل‌های اختصاصی برای پیش‌بینی، بینایی ماشین، پردازش زبان طبیعی و اتوماسیون تصمیم‌گیری.</p>
+        <div class="service-tags"><span>Computer Vision</span><span>NLP</span><span>MLOps</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M9 9V6a3 3 0 0 1 6 0v3M9 14h.01M15 14h.01"/></svg></div>
+        <h3>رباتیک و سامانه‌های خودران</h3>
+        <p>طراحی سخت‌افزار، کنترل حرکتی و یکپارچه‌سازی حسگرها برای ربات‌های صنعتی، خدماتی و آموزشی.</p>
+        <div class="service-tags"><span>ROS</span><span>Embedded</span><span>Sensor Fusion</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 18h4"/></svg></div>
+        <h3>توسعه اپلیکیشن</h3>
+        <p>ساخت اپلیکیشن‌های موبایل و وب با معماری مقیاس‌پذیر، از MVP تا محصول نهایی آماده انتشار.</p>
+        <div class="service-tags"><span>iOS/Android</span><span>Web App</span><span>Cloud</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M22 10L12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+        <h3>آموزش تخصصی</h3>
+        <p>دوره‌های عملی هوش مصنوعی و رباتیک برای دانشجویان و تیم‌های فنی شرکت‌ها، همراه با پروژه واقعی.</p>
+        <div class="service-tags"><span>Bootcamp</span><span>Workshop</span><span>Mentorship</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="approach">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">فرایند کار</span>
+      <h2>چطور با شما همکاری می‌کنیم</h2>
+    </div>
+    <div class="approach-list">
+      <div class="approach-item">
+        <span class="approach-num">۰۱</span>
+        <h4>کشف و تحلیل نیاز</h4>
+        <p>در جلسات اولیه، مسئله واقعی کسب‌وکار شما را شناسایی و امکان‌سنجی فنی را بررسی می‌کنیم.</p>
+      </div>
+      <div class="approach-item">
+        <span class="approach-num">۰۲</span>
+        <h4>طراحی و نمونه‌سازی</h4>
+        <p>یک نمونه اولیه سریع می‌سازیم تا قبل از سرمایه‌گذاری کامل، فرضیات کلیدی را تست کنیم.</p>
+      </div>
+      <div class="approach-item">
+        <span class="approach-num">۰۳</span>
+        <h4>توسعه و آموزش مدل</h4>
+        <p>تیم فنی محصول نهایی را می‌سازد؛ مدل‌ها آموزش داده و سامانه‌ها یکپارچه می‌شوند.</p>
+      </div>
+      <div class="approach-item">
+        <span class="approach-num">۰۴</span>
+        <h4>استقرار و پشتیبانی</h4>
+        <p>محصول را در مقیاس واقعی مستقر می‌کنیم و پشتیبانی و بهبود مستمر را ادامه می‌دهیم.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">محصولات و پروژه‌ها</span>
+      <h2>نمونه‌ای از آنچه ساخته‌ایم</h2>
+      <p>پروژه‌هایی که از آزمایشگاه استارونت به دنیای واقعی رسیده‌اند.</p>
+    </div>
+    <div class="product-scroll">
+      <div class="product-card">
+        <span class="product-badge">هوش مصنوعی</span>
+        <h3>دستیار تحلیل تصویر پزشکی</h3>
+        <p>مدل بینایی ماشین برای تشخیص زودهنگام ناهنجاری در تصاویر رادیولوژی با دقت بالا.</p>
+      </div>
+      <div class="product-card">
+        <span class="product-badge">رباتیک</span>
+        <h3>ربات خدماتی داخل‌سالن</h3>
+        <p>سامانه ناوبری خودران برای جابه‌جایی و تحویل کالا در فضاهای اداری و انبارها.</p>
+      </div>
+      <div class="product-card">
+        <span class="product-badge">اپلیکیشن</span>
+        <h3>پلتفرم یادگیری تطبیقی</h3>
+        <p>اپلیکیشنی که مسیر آموزشی هر کاربر را بر اساس عملکرد او شخصی‌سازی می‌کند.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="edu-band" id="education">
+  <div class="container">
+    <div class="edu-inner">
+      <div>
+        <span class="section-tag" style="color:rgba(23,26,46,0.6);">آموزش استارونت</span>
+        <h2>مهندسان آینده هوش مصنوعی و رباتیک را همین‌جا تربیت می‌کنیم</h2>
+        <p>دوره‌های ما نظری نیستند؛ هر شرکت‌کننده روی یک پروژه واقعی کار می‌کند و با راهنمایی مهندسان استارونت آن را به پایان می‌رساند.</p>
+      </div>
+      <div class="edu-cta" style="padding:36px;border-radius:var(--radius);">
+        <ul class="edu-list">
+          <li>دوره جامع یادگیری ماشین از پایه تا استقرار</li>
+          <li>کارگاه عملی برنامه‌نویسی رباتیک با ROS</li>
+          <li>بوت‌کمپ توسعه اپلیکیشن با هوش مصنوعی</li>
+          <li>برنامه منتورشیپ یک‌به‌یک برای تیم‌های شرکتی</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-tag">تماس با ما</span>
+        <h2>بیایید درباره پروژه‌تان صحبت کنیم</h2>
+        <p>چه یک ایده اولیه دارید و چه به دنبال تیمی برای اجرای یک سامانه هوش مصنوعی هستید، برای‌مان بنویسید.</p>
+        <div class="contact-detail">
+          <div><span>ایمیل</span><a href="mailto:info@starvent.ir">info@starvent.ir</a></div>
+          <div><span>تلفن</span><a href="tel:+982100000000" dir="ltr" style="unicode-bidi:plaintext;">+98 21 0000 0000</a></div>
+          <div><span>دفتر مرکزی</span><a href="#">تهران، ایران</a></div>
+        </div>
+      </div>
+      <form id="contactForm">
+        <div class="field">
+          <label for="name">نام و نام خانوادگی</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">ایمیل</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="message">درباره پروژه‌تان بگویید</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit">ارسال پیام</button>
+        <span class="form-note" id="formNote"></span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <span class="brand-name" style="color:var(--ink);">Star<span style="color:var(--gold);">vent</span></span>
+      <div class="footer-links">
+        <a href="#about">درباره ما</a>
+        <a href="#services">خدمات</a>
+        <a href="#products">محصولات</a>
+        <a href="#education">آموزش</a>
+        <a href="#contact">تماس</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© ۱۴۰۴ استارونت — ستاره نوآور یگانه. تمامی حقوق محفوظ است.</span>
+      <span>ساخته‌شده با تمرکز بر هوش مصنوعی و رباتیک</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Contact form (front-end only demo)
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = 'پیام شما ثبت شد. به‌زودی با شما تماس می‌گیریم.';
+    form.reset();
+  });
+
+  // ---------- Hero constellation / neural network animation ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, nodes;
+
+  function resize(){
+    const hero = document.querySelector('.hero');
+    w = canvas.width = hero.offsetWidth;
+    h = canvas.height = hero.offsetHeight;
+  }
+
+  function initNodes(){
+    const count = Math.min(70, Math.floor((w*h)/22000));
+    nodes = Array.from({length: count}, () => ({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      vx: (Math.random()-0.5)*0.25,
+      vy: (Math.random()-0.5)*0.25,
+      r: Math.random()*1.6 + 0.6
+    }));
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    const maxDist = 150;
+    for(let i=0;i<nodes.length;i++){
+      const n = nodes[i];
+      if(!reduceMotion){
+        n.x += n.vx; n.y += n.vy;
+        if(n.x < 0 || n.x > w) n.vx *= -1;
+        if(n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      for(let j=i+1;j<nodes.length;j++){
+        const m = nodes[j];
+        const dx = n.x-m.x, dy = n.y-m.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < maxDist){
+          ctx.strokeStyle = `rgba(229,178,74,${0.14 * (1 - dist/maxDist)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(m.x, m.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for(const n of nodes){
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(95,211,196,0.75)';
+      ctx.fill();
+    }
+    if(!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  function startHero(){
+    resize();
+    initNodes();
+    draw();
+  }
+  window.addEventListener('resize', () => { resize(); initNodes(); if(reduceMotion) draw(); });
+  startHero();
+
+  // ---------- About orbit (star with orbiting satellite nodes) ----------
+  const ac = document.getElementById('about-canvas');
+  const actx = ac.getContext('2d');
+  let angle = 0;
+  const satellites = [
+    {r: 90, speed: 0.006, size: 5, color:'#5FD3C4'},
+    {r: 130, speed: -0.004, size: 4, color:'#E5B24A'},
+    {r: 165, speed: 0.003, size: 6, color:'#E5B24A'},
+    {r: 60, speed: -0.008, size: 3, color:'#5FD3C4'}
+  ];
+
+  function drawOrbit(){
+    const cw = ac.width, ch = ac.height;
+    actx.clearRect(0,0,cw,ch);
+    const cx = cw/2, cy = ch/2;
+
+    // orbit rings
+    satellites.forEach(s => {
+      actx.beginPath();
+      actx.arc(cx, cy, s.r, 0, Math.PI*2);
+      actx.strokeStyle = 'rgba(23,26,46,0.08)';
+      actx.lineWidth = 1;
+      actx.stroke();
+    });
+
+    // core star
+    const grad = actx.createRadialGradient(cx,cy,0,cx,cy,26);
+    grad.addColorStop(0, '#E5B24A');
+    grad.addColorStop(1, 'rgba(229,178,74,0)');
+    actx.beginPath();
+    actx.arc(cx, cy, 26, 0, Math.PI*2);
+    actx.fillStyle = grad;
+    actx.fill();
+    actx.beginPath();
+    actx.arc(cx, cy, 8, 0, Math.PI*2);
+    actx.fillStyle = '#171A2E';
+    actx.fill();
+
+    satellites.forEach((s, i) => {
+      const a = angle * s.speed * 40 + i*1.5;
+      const x = cx + Math.cos(a)*s.r;
+      const y = cy + Math.sin(a)*s.r;
+      actx.beginPath();
+      actx.moveTo(cx,cy);
+      actx.lineTo(x,y);
+      actx.strokeStyle = 'rgba(23,26,46,0.06)';
+      actx.stroke();
+      actx.beginPath();
+      actx.arc(x, y, s.size, 0, Math.PI*2);
+      actx.fillStyle = s.color;
+      actx.fill();
+    });
+
+    angle += 1;
+    if(!reduceMotion) requestAnimationFrame(drawOrbit);
+  }
+  drawOrbit();
+</script>
+</body>
+</html>
